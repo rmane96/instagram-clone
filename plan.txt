@@ -1,0 +1,8 @@
+requirements
+
+1 . signup, login , logout 
+2 . posts with image and caption (image will be in binary)
+3.  get all posts 
+4.  crud for posts
+5.  authentication and comments
+6.  crud on posts with authentication
