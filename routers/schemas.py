@@ -1,5 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
+from typing import Optional
+from db.models import UserModel
 
 
 class UserBase(BaseModel):
@@ -13,19 +15,29 @@ class UserDisplay(BaseModel):
     email :str
     class Config(): #need to convert from orm to json or it gives error --> not a valid dict -- type error
         orm_mode = True
+
+class User(BaseModel):
+    username:str
+    class Config():
+        orm_mode = True
+        
+
+class UserAuth(BaseModel):
+    id:int
+    username:str
+    
+    
     
 
 class PostBase(BaseModel):
     image_url:str
     image_url_type:str
     caption:str
-    creator_id:int 
+    
+    
 
 # for post display
-class User(BaseModel):
-    username:str
-    class Config():
-        orm_mode = True
+
     
 class PostDisplay(BaseModel):
     id: int
@@ -33,11 +45,13 @@ class PostDisplay(BaseModel):
     caption: str
     creator_id: int
     timestamp: datetime
-    username : str
+    creator_username : str 
     
     class Config():
         orm_mode = True
-    
+        
+
+        
     
 
 
