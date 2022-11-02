@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, status, File
 from auth.oauth2 import get_current_user
 from db.database import get_db
 from sqlalchemy.orm import Session
-from routers.schemas import PostBase, PostDisplay, UserAuth  
+from routers.schemas import PostBase, UserAuth  
 from fastapi.exceptions import HTTPException
 from db import db_post
 from typing import List
@@ -19,11 +19,11 @@ router = APIRouter(
 image_url_types = ['absolute','relative']
 
 @router.post('')
-def create(request:PostBase, db: Session = Depends(get_db), current_user:UserAuth = Depends(get_current_user)):
+def create(request:PostBase, db: Session = Depends(get_db), user:UserAuth = Depends(get_current_user)):
     if not request.image_url_type in image_url_types:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, 
                             detail="Values can only be absolute or relative")
-    return db_post.create(db,request,current_user)
+    return db_post.create(db,request)
 
 @router.get('/all')
 def get_all_post(db:Session = Depends(get_db)):
@@ -42,6 +42,9 @@ def upload_image(image: UploadFile = File(...),current_user:UserAuth = Depends(g
     return {"filename":path}  
 
 
-    
-    
+@router.delete('/delete/{id}')
+def delete_post(id: int, db:Session = Depends(get_db), current_user : UserAuth = Depends(get_current_user)):
+    return db_post.delete(db,id,current_user.id)
+
+
     

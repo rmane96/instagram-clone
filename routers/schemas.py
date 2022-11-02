@@ -1,57 +1,56 @@
-from datetime import datetime
 from pydantic import BaseModel
-from typing import Optional
-from db.models import UserModel
+from datetime import datetime
+from typing import List
 
 
 class UserBase(BaseModel):
-    username: str
-    email:str
-    password:str
-    
+  username: str
+  email: str
+  password: str
 
-class UserDisplay(BaseModel): 
-    username : str
-    email :str
-    class Config(): #need to convert from orm to json or it gives error --> not a valid dict -- type error
-        orm_mode = True
-
-class User(BaseModel):
-    username:str
-    class Config():
-        orm_mode = True
-        
-
-class UserAuth(BaseModel):
-    id:int
-    username:str
-    
-    
-    
+class UserDisplay(BaseModel):
+  username: str
+  email: str
+  class Config():
+    orm_mode = True
 
 class PostBase(BaseModel):
-    image_url:str
-    image_url_type:str
-    caption:str
-    
-    
+  image_url: str
+  image_url_type: str
+  caption: str
+  creator_id: int
 
-# for post display
+# For PostDisplay
+class User(BaseModel):
+  username: str
+  class Config():
+    orm_mode = True
 
-    
+# For PostDisplay
+class Comment(BaseModel):
+  text: str
+  username: str
+  timestamp: datetime
+  class Config():
+    orm_mode = True
+
 class PostDisplay(BaseModel):
-    id: int
-    image_url_type: str
-    caption: str
-    creator_id: int
-    timestamp: datetime
-    creator_username : str 
-    
-    class Config():
-        orm_mode = True
-        
+  id: int
+  image_url: str
+  image_url_type: str
+  caption: str
+  timestamp: datetime
+  user: User
+#   comments: List[Comment]
+  class Config():
+    orm_mode = True
 
-        
-    
+class UserAuth(BaseModel):
+  id: int
+  username: str
+  email: str
 
-
+class CommentBase(BaseModel):
+  username: str
+  text: str
+  post_id: int

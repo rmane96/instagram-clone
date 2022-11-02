@@ -19,8 +19,7 @@ class PostModel(Base):
     image_url_type = Column(String)
     caption = Column(String)
     timestamp = Column(DateTime)
-    creator_username = Column(Integer, ForeignKey('user.username'))
-    user = relationship('UserModel', back_populates='items')
-    
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship('UserModel', back_populates='items')  
     
     
