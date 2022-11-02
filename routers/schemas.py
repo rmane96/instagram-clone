@@ -41,7 +41,7 @@ class PostDisplay(BaseModel):
   caption: str
   timestamp: datetime
   user: User
-#   comments: List[Comment]
+  comments: List[Comment]
   class Config():
     orm_mode = True
 

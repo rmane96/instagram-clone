@@ -19,7 +19,7 @@ def create(db: Session, request: PostBase):
   return new_post
 
 def get_all(db: Session):
-  return db.query(PostBase).all()
+  return db.query(PostModel).all()
 
 def delete(db: Session, id: int, user_id: int):
   post = db.query(PostModel).filter(PostModel.id == id).first()
